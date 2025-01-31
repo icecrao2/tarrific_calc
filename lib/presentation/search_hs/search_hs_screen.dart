@@ -16,14 +16,14 @@ class SearchHsScreen extends StatelessWidget {
           'HS 코드 찾기'
         ),
       ),
-      body: Column(
+      body: const Column(
         children: [
           SearchHsTextFieldComponent(),
-          const SizedBox(height: 30,),
-          const Expanded(child: SearchHsCodeListComponent(elements: [],),),
-          const SizedBox(height: 30,),
-          const SearchHsCodeButtonComponent(),
-          const SizedBox(height: 30,),
+          SizedBox(height: 30,),
+          Expanded(child: SearchHsCodeListComponent(),),
+          SizedBox(height: 30,),
+          SearchHsCodeButtonComponent(),
+          SizedBox(height: 30,),
         ],
       )
     );

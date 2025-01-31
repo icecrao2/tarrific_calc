@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tariff_calc/presentation/_design/list/default_list.dart';
-import 'package:tariff_calc/presentation/search_hs/components/_list/search_hs_code_list_element_ui_model.dart';
 
-class SearchHsCodeListComponent extends StatelessWidget {
+import '../../config/di.dart';
 
-  final List<SearchHsCodListElementUiModel> elements;
+class SearchHsCodeListComponent extends ConsumerWidget {
 
-  const SearchHsCodeListComponent({super.key, required this.elements});
+  const SearchHsCodeListComponent({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final state = ref.watch(hsCodeListStateProvider);
 
     return DefaultList(
-      elements: elements.map((element) => DefaultListElementUiModel(
+      elements: state.map((element) => DefaultListElementUiModel(
           leading: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,10 +50,10 @@ class SearchHsCodeListComponent extends StatelessWidget {
               await Clipboard.setData(ClipboardData(text: element.hsCode));
               if(context.mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('hs 코드를 복사하였습니다!'),
-                      duration: Duration(seconds: 2),
-                    )
+                  const SnackBar(
+                    content: Text('hs 코드를 복사하였습니다!'),
+                    duration: Duration(seconds: 2),
+                  )
                 );
               }
             },
