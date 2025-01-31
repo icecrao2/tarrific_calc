@@ -29,8 +29,10 @@ class HsCodeListRepositoryUniPass extends HsCodeListRepository {
       case HsCodeRequestMethodType.english:
         queryParams.addAll({'koenTp': '2', 'prnm': requestForm.query});
       case HsCodeRequestMethodType.hsCode:
-        queryParams.addAll({'hsSgn': requestForm.query});
+        queryParams.addAll({'hsSgn': requestForm.query, 'koenTp': '1'});
     }
+
+    print(queryParams);
 
     final response = await _httpClient.get('hsSgnQry/searchHsSgn', queryParams: queryParams, isXmlResponse: true);
     List<dynamic> items = response["hsSgnSrchRtnVo"]['hsSgnSrchRsltVo'];
