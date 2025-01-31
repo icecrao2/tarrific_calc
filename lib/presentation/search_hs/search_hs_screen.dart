@@ -20,7 +20,7 @@ class SearchHsScreen extends StatelessWidget {
         children: [
           SearchHsTextFieldComponent(),
           const SizedBox(height: 30,),
-          const Flexible(child: SearchHsCodeListComponent(),),
+          const Expanded(child: SearchHsCodeListComponent(elements: [],),),
           const SizedBox(height: 30,),
           const SearchHsCodeButtonComponent(),
           const SizedBox(height: 30,),

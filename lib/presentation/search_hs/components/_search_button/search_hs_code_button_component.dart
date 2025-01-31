@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tariff_calc/presentation/search_hs/_state/input_text_controller_state/input_text_controller_state.dart';
 
-class SearchHsCodeButtonComponent extends StatelessWidget {
+import '../../../_design/button/primary_button.dart';
+
+class SearchHsCodeButtonComponent extends ConsumerWidget {
   const SearchHsCodeButtonComponent({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 56,
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: () {},
-        style: ElevatedButton.styleFrom(
-          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
-          backgroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12))),
-        child:const  Text("HS 코드 찾기")),
+  Widget build(BuildContext context, WidgetRef ref) {
+    return PrimaryButton(
+      text: "HS 코드 찾기",
+      onPressed: () {
+        print(ref.read(inputTextControllerStateProvider).text);
+      },
     );
   }
 }
