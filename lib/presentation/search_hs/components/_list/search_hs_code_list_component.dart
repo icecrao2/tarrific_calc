@@ -61,8 +61,3 @@ class SearchHsCodeListComponent extends StatelessWidget {
     );
   }
 }
-
-
-class SearchHsCodeListUIModel {
-
-}
