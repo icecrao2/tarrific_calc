@@ -16,25 +16,31 @@ class SearchHsCodeListComponent extends ConsumerWidget {
 
     return DefaultList(
       elements: state.map((element) => DefaultListElementUiModel(
-          leading: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                element.koreanName,
-                style: const TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w500,
+          leading: SizedBox(
+            width: 100,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  element.koreanName,
+                  maxLines: 1,
+                  style: const TextStyle(
+                    fontSize: 8,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              ),
-              Text(
-                element.englishName,
-                style: const TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w500,
+                Text(
+                  element.englishName,
+                  maxLines: 1,
+                  style: const TextStyle(
+                    fontSize: 8,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           center: Center(
             child: Text(

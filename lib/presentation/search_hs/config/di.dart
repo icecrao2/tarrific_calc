@@ -10,8 +10,8 @@ import '../_state/hs_code_list_state/hs_code_list_state.dart';
 final hsCodeListStateProvider = AutoDisposeStateNotifierProvider<
     HsCodeListState,
     List<HsCodeEntity>>((ref) {
-  final hsCodeListRepository = ref.watch(hsCodeListRepositoryProvider);
-  return HsCodeListState(hsCodeListRepository: hsCodeListRepository);
+  final getHsCodeListUsecase = ref.watch(getHsCodeListUsecaseProvider);
+  return HsCodeListState(getHsCodeListUsecase: getHsCodeListUsecase);
 });
 final inputTextControllerStateProvider = AutoDisposeProvider((ref) {
   final controller = TextEditingController();

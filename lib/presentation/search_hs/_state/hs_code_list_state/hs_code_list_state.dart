@@ -1,24 +1,21 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tariff_calc/domain/hs_code/entity/hs_code_request_form_entity.dart';
-import 'package:tariff_calc/domain/hs_code/repository/hs_code_list_repository.dart';
+
 import '../../../../domain/hs_code/entity/hs_code_entity.dart';
+import '../../../../domain/hs_code/usecase/get_hs_code_list_usecase.dart';
 
 class HsCodeListState extends StateNotifier<List<HsCodeEntity>> {
-
-  final HsCodeListRepository _hsCodeListRepository;
+  final GetHsCodeListUsecase _getHsCodeListUsecase;
 
   HsCodeListState({
-    required HsCodeListRepository hsCodeListRepository
+    required GetHsCodeListUsecase getHsCodeListUsecase
   })
-    : _hsCodeListRepository = hsCodeListRepository,
+    : _getHsCodeListUsecase = getHsCodeListUsecase,
       super([]);
 
   Future<void> searchHsCode(String query) async {
-
-    state = await _hsCodeListRepository.getHsCodeListByKorean(HsCodeRequestFormEntity(
-      query: query,
-      method: HsCodeRequestMethodType.korean
-    ));
+    final hsCodeGroup = await _getHsCodeListUsecase(query);
+    Set<String> hsCode = {};
+    state = hsCodeGroup.where((code) => hsCode.add(code.hsCode)).toList();
   }
 }
 
