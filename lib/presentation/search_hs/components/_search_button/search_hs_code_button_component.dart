@@ -10,12 +10,12 @@ class SearchHsCodeButtonComponent extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
         onPressed: () {},
-        child: Text("HS 코드 찾기"),
         style: ElevatedButton.styleFrom(
-          textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
           backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12)))),
+            borderRadius: BorderRadius.circular(12))),
+        child:const  Text("HS 코드 찾기")),
     );
   }
 }

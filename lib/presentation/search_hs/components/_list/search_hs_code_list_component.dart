@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class HsCodeListComponent extends StatelessWidget {
-  const HsCodeListComponent({super.key});
+class SearchHsCodeListComponent extends StatelessWidget {
+  const SearchHsCodeListComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -60,4 +60,9 @@ class HsCodeListComponent extends StatelessWidget {
       ),
     );
   }
+}
+
+
+class SearchHsCodeListUIModel {
+
 }
