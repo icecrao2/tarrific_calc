@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tariff_calc/presentation/search_hs/search_hs_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -6,62 +7,41 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
-    );
+        title: 'Flutter Demo',
+        theme: ThemeData(
+            useMaterial3: true,
+            scaffoldBackgroundColor: Colors.transparent,
+            appBarTheme: const AppBarTheme(
+                backgroundColor: Colors.transparent,
+                titleTextStyle: TextStyle(color: Colors.white, fontSize: 16)),
+            inputDecorationTheme: const InputDecorationTheme(
+              filled: true,
+              fillColor: Colors.white,
+              labelStyle: TextStyle(
+                  color: Color.fromRGBO(76, 106, 255, 1),
+                  fontWeight: FontWeight.w700),
+            )),
+        home: GestureDetector(
+          onTap: () {
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 33),
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color.fromRGBO(0, 53, 129, 1),
+                    Color.fromRGBO(76, 106, 255, 1),
+                  ],
+                ),
+              ),
+              child: SearchHsScreen()),
+        ));
   }
 }
