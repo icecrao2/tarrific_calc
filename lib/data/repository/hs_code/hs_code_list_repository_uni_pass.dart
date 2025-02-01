@@ -37,8 +37,6 @@ class HsCodeListRepositoryUniPass extends HsCodeListRepository {
     return items.map((item) => HsCodeEntity(
         hsCode: item['hsSgn'] ?? "",
         koreanName: item['korePrnm'] ?? "",
-        englishName: item['englPrnm'] ?? "",
-        defaultTax: double.tryParse(item['txrt']) ?? 0,
-        weightUnit: item['wghtUt'] ?? "")).toList();
+        englishName: item['englPrnm'] ?? "")).toList();
   }
 }

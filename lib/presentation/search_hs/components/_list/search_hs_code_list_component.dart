@@ -16,57 +16,50 @@ class SearchHsCodeListComponent extends ConsumerWidget {
 
     return DefaultList(
       elements: state.map((element) => DefaultListElementUiModel(
-          leading: SizedBox(
-            width: 100,
+          leading: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const Text(
+                '품명',
+                maxLines: 1,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Text(
+                element.koreanName.isNotEmpty ? element.koreanName : element.englishName,
+                maxLines: 1,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+          center: Center(
             child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  element.koreanName,
+                const Text(
+                  'HS Code',
                   maxLines: 1,
-                  style: const TextStyle(
-                    fontSize: 8,
+                  style: TextStyle(
+                    fontSize: 12,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
                 Text(
-                  element.englishName,
-                  maxLines: 1,
+                  element.hsCode,
                   style: const TextStyle(
-                    fontSize: 8,
-                    fontWeight: FontWeight.w500,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ],
-            ),
+            )
           ),
-          center: Center(
-            child: Text(
-              element.hsCode,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          trailing:  IconButton(
-            onPressed: () async {
-              await Clipboard.setData(ClipboardData(text: element.hsCode));
-              if(context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('hs 코드를 복사하였습니다!'),
-                    duration: Duration(seconds: 2),
-                  )
-                );
-              }
-            },
-            icon: const Icon(
-              Icons.copy,
-              size: 20,
-            ))
+          trailing: const SizedBox.shrink()
       )).toList()
     );
   }
