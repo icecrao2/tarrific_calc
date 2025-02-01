@@ -34,9 +34,13 @@ class HsCodeRepositoryUniPass extends HsCodeRepository {
 
     final response = await _httpClient.get('hsSgnQry/searchHsSgn', queryParams: queryParams, isXmlResponse: true);
     List<dynamic> items = response["hsSgnSrchRtnVo"]['hsSgnSrchRsltVo'];
+
+    print(items);
+
     return items.map((item) => HsCodeEntity(
         hsCode: item['hsSgn'] ?? "",
         koreanName: item['korePrnm'] ?? "",
-        englishName: item['englPrnm'] ?? "")).toList();
+        englishName: item['englPrnm'] ?? "",
+        unit: item['wghtUt'] ?? "")).toList();
   }
 }

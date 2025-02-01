@@ -1,12 +1,12 @@
 import 'package:tariff_calc/domain/hs_code/entity/hs_code_entity.dart';
 import 'package:tariff_calc/domain/hs_code/entity/hs_code_request_form_entity.dart';
 
-import '../repository/hs_code_list_repository.dart';
+import '../repository/hs_code_repository.dart';
 
 class GetHsCodeListUsecase {
-  final HsCodeListRepository _repository;
+  final HsCodeRepository _repository;
 
-  GetHsCodeListUsecase({required HsCodeListRepository repository})
+  GetHsCodeListUsecase({required HsCodeRepository repository})
       : _repository = repository;
 
   Future<List<HsCodeEntity>> call(String query) async {
@@ -14,7 +14,7 @@ class GetHsCodeListUsecase {
     if (methodType == null) {
       throw Exception();
     }
-    final list = await _repository.getHsCodeListByKorean(
+    final list = await _repository.getHsCodeList(
         HsCodeRequestFormEntity(query: query, method: methodType));
 
     Set<String> hsCode = {};

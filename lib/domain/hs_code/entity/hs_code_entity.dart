@@ -7,5 +7,6 @@ class HsCodeEntity with _$HsCodeEntity {
   const factory HsCodeEntity(
       {required String hsCode,
       required String koreanName,
-      required String englishName}) = _HsCodeEntity;
+      required String englishName,
+      required String unit}) = _HsCodeEntity;
 }

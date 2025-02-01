@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tariff_calc/presentation/tariff_lookup/tariff_lookup_screen.dart';
+import 'package:tariff_calc/presentation/search_hs/search_hs_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,8 +20,10 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
             scaffoldBackgroundColor: Colors.transparent,
             appBarTheme: const AppBarTheme(
-                backgroundColor: Colors.transparent,
-                titleTextStyle: TextStyle(color: Colors.white, fontSize: 16)),
+              backgroundColor: Colors.transparent,
+              titleTextStyle: TextStyle(color: Colors.white, fontSize: 16),
+              iconTheme: IconThemeData(color: Colors.white),
+            ),
             inputDecorationTheme: const InputDecorationTheme(
               filled: true,
               fillColor: Colors.white,
@@ -32,27 +34,7 @@ class MyApp extends StatelessWidget {
             listTileTheme: const ListTileThemeData(
               tileColor: Colors.white,
             )),
-        home: SafeArea(
-            bottom: true,
-            top: false,
-            child: GestureDetector(
-              onTap: () {
-                FocusManager.instance.primaryFocus?.unfocus();
-              },
-              child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 33),
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color.fromRGBO(0, 53, 129, 1),
-                        Color.fromRGBO(76, 106, 255, 1),
-                      ],
-                    ),
-                  ),
-                  // child: const SearchHsScreen()),
-                  child: const TariffLookupScreen()),
-            )));
+        home: const SearchHsScreen()
+    );
   }
 }

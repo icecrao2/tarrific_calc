@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tariff_calc/presentation/_design/layout/app_scaffold.dart';
 import 'package:tariff_calc/presentation/search_hs/components/_text_field/search_hs_text_field_component.dart';
 
 import 'components/_list/search_hs_code_list_component.dart';
@@ -10,13 +11,9 @@ class SearchHsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'HS 코드 찾기'
-        ),
-      ),
-      body: const Column(
+    return const AppScaffold(
+      title: 'HS 코드 찾기',
+      child: Column(
         children: [
           SearchHsTextFieldComponent(),
           SizedBox(height: 30,),

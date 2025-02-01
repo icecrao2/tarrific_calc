@@ -1,38 +1,47 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
-typedef StringCallback = void Function(String str);
-
 class ToggleButtonRadio extends StatefulWidget {
+  final ToggleButtonRadioController controller;
 
-  final List<String> options;
-  final StringCallback onTap;
-  const ToggleButtonRadio({super.key, required this.options, required this.onTap});
+  const ToggleButtonRadio({super.key, required this.controller});
 
   @override
   State<ToggleButtonRadio> createState() => _ToggleButtonRadioState();
 }
 
 class _ToggleButtonRadioState extends State<ToggleButtonRadio> {
-  int _selectedIndex = 0;
+  int? _selectedIndex;
 
   @override
   Widget build(BuildContext context) {
-    return ToggleButtons(
-      isSelected: List.generate(widget.options.length, (index) => index == _selectedIndex),
-      onPressed: (index) {
-        setState(() {
-          widget.onTap(widget.options[index]);
-          _selectedIndex = index;
-        });
-      },
-      fillColor: Colors.white,
-      children: widget.options.map((e) => Container(
-        width: 40,
-        height: 45,
-        alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(horizontal: 5),
-        child: Text(e, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 11),),
-      )).toList(),
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: ToggleButtons(
+        isSelected: List.generate(widget.controller.options.length, (index) => index == _selectedIndex),
+        onPressed: (index) {
+          setState(() {
+            _selectedIndex = index;
+            widget.controller.controller.add(widget.controller.options[index]);
+          });
+        },
+        fillColor: Colors.white,
+        children: widget.controller.options.map((e) => Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          child: Text(e, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 11),),
+        )).toList(),
+      )
     );
   }
+}
+
+class ToggleButtonRadioController {
+  final StreamController controller;
+  Stream get stream => controller.stream;
+  final List<String> options;
+
+  const ToggleButtonRadioController({
+    required this.controller,
+    required this.options});
 }
