@@ -2,14 +2,14 @@ import 'package:tariff_calc/data/client/env/env_client.dart';
 import 'package:tariff_calc/data/client/http/custom_http_client.dart';
 import 'package:tariff_calc/domain/hs_code/entity/hs_code_entity.dart';
 import 'package:tariff_calc/domain/hs_code/entity/hs_code_request_form_entity.dart';
-import 'package:tariff_calc/domain/hs_code/repository/hs_code_list_repository.dart';
+import 'package:tariff_calc/domain/hs_code/repository/hs_code_repository.dart';
 
-class HsCodeListRepositoryUniPass extends HsCodeListRepository {
+class HsCodeRepositoryUniPass extends HsCodeRepository {
 
   final CustomHttpClient _httpClient;
   final EnvClient _envClient;
 
-  HsCodeListRepositoryUniPass({
+  HsCodeRepositoryUniPass({
     required CustomHttpClient httpClient,
     required EnvClient envClient
   })
@@ -19,7 +19,7 @@ class HsCodeListRepositoryUniPass extends HsCodeListRepository {
         ..setHeader(null);
 
   @override
-  Future<List<HsCodeEntity>> getHsCodeListByKorean(HsCodeRequestFormEntity requestForm) async {
+  Future<List<HsCodeEntity>> getHsCodeList(HsCodeRequestFormEntity requestForm) async {
 
     Map<String, dynamic> queryParams = {'crkyCn': _envClient.uniPassHSCodeSearchApiKey,};
 
