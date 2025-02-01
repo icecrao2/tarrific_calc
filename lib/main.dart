@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tariff_calc/presentation/search_hs/search_hs_screen.dart';
+import 'package:tariff_calc/presentation/tariff_lookup/tariff_lookup_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,7 +51,8 @@ class MyApp extends StatelessWidget {
                       ],
                     ),
                   ),
-                  child: const SearchHsScreen()),
+                  // child: const SearchHsScreen()),
+                  child: const TariffLookupScreen()),
             )));
   }
 }
