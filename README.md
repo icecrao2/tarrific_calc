@@ -1,20 +1,17 @@
-<<<<<<< HEAD
 # tarrific_calc
 관세 계산 사이드프로젝트
-=======
-# tariff_calc
 
+## skiill
+- Dart 
+- Flutter
+- riverpod
+- open api (uni pass)
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
->>>>>>> 59df2bd (init)
+## content
+- 품명을 검색하여 hs 코드를 조회하고 해당 물품에 관세율을 확인하는 어플리케이션
+<p align="center">
+  <img src="readme%2FSimulator%20Screenshot%20-%20iPhone%2015%20Plus%20-%202025-02-01%20at%2020.37.56.png" width="22%" style="margin-right: 10px;">
+  <img src="readme%2FSimulator%20Screenshot%20-%20iPhone%2015%20Plus%20-%202025-02-01%20at%2020.38.01.png" width="22%" style="margin-right: 10px;">
+  <img src="readme%2FSimulator%20Screenshot%20-%20iPhone%2015%20Plus%20-%202025-02-01%20at%2020.38.04.png" width="22%" style="margin-right: 10px;">
+  <img src="readme%2FSimulator%20Screenshot%20-%20iPhone%2015%20Plus%20-%202025-02-01%20at%2020.43.38.png" width="22%">
+</p>
