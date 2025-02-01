@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tariff_calc/presentation/_design/list/default_list.dart';
+import 'package:tariff_calc/presentation/tariff_lookup/tariff_lookup_screen.dart';
 
 import '../../config/di.dart';
 
@@ -16,57 +16,62 @@ class SearchHsCodeListComponent extends ConsumerWidget {
 
     return DefaultList(
       elements: state.map((element) => DefaultListElementUiModel(
-          leading: SizedBox(
-            width: 100,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  element.koreanName,
-                  maxLines: 1,
-                  style: const TextStyle(
-                    fontSize: 8,
-                    fontWeight: FontWeight.w500,
-                  ),
+        leading: SizedBox(
+          width: 160,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const Text(
+                '품명',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
                 ),
-                Text(
-                  element.englishName,
-                  maxLines: 1,
-                  style: const TextStyle(
-                    fontSize: 8,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          center: Center(
-            child: Text(
-              element.hsCode,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
               ),
-            ),
+              Text(
+                element.koreanName.isNotEmpty ? element.koreanName : element.englishName,
+                overflow: TextOverflow.ellipsis,
+                softWrap: false,
+                maxLines: 1,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
           ),
-          trailing:  IconButton(
-            onPressed: () async {
-              await Clipboard.setData(ClipboardData(text: element.hsCode));
-              if(context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('hs 코드를 복사하였습니다!'),
-                    duration: Duration(seconds: 2),
-                  )
-                );
-              }
-            },
-            icon: const Icon(
-              Icons.copy,
-              size: 20,
-            ))
+        ),
+        center: Center(
+          child: Column(
+            children: [
+              const Text(
+                'HS Code',
+                maxLines: 1,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Text(
+                element.hsCode,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          )
+        ),
+        trailing: const SizedBox.shrink(),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TariffLookupScreen(hsCode: element.hsCode),
+            ),
+          );
+        }
       )).toList()
     );
   }

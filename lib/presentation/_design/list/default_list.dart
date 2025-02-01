@@ -22,6 +22,7 @@ class DefaultList extends StatelessWidget {
               title: elements[index].center,
               trailing: elements[index].trailing,
               dense: true,
+              onTap: elements[index].onTap,
             ),
           );
         },
@@ -34,7 +35,8 @@ class DefaultListElementUiModel {
   final Widget leading;
   final Widget center;
   final Widget trailing;
+  final VoidCallback onTap;
 
   const DefaultListElementUiModel(
-      {required this.leading, required this.center, required this.trailing});
+      {required this.leading, required this.center, required this.trailing, required this.onTap});
 }

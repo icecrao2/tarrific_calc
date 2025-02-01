@@ -13,9 +13,7 @@ class HsCodeListState extends StateNotifier<List<HsCodeEntity>> {
       super([]);
 
   Future<void> searchHsCode(String query) async {
-    final hsCodeGroup = await _getHsCodeListUsecase(query);
-    Set<String> hsCode = {};
-    state = hsCodeGroup.where((code) => hsCode.add(code.hsCode)).toList();
+    state = await _getHsCodeListUsecase(query);
   }
 }
 

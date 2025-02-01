@@ -8,6 +8,5 @@ class HsCodeEntity with _$HsCodeEntity {
       {required String hsCode,
       required String koreanName,
       required String englishName,
-      required double defaultTax,
-      required String weightUnit}) = _HsCodeEntity;
+      required String unit}) = _HsCodeEntity;
 }
