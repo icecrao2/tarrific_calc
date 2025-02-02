@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tariff_calc/presentation/_design/button/primary_button.dart';
+import 'package:tariff_calc/presentation/tariff_lookup/config/di.dart';
 
 import '../../../_design/input/default_text_field.dart';
 import '../../../_design/text/title_content_text.dart';
 
-class TariffCalcCardComponent extends StatelessWidget {
-  const TariffCalcCardComponent({super.key});
+class TariffCalcCardComponent extends ConsumerWidget {
+  final _unitPriceTextEditingController = TextEditingController();
+  final _unitAmountTextEditingController = TextEditingController();
+
+  TariffCalcCardComponent({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final state = ref.watch(tariffCalcStateProvider);
+
     return SizedBox(
       width: MediaQuery.sizeOf(context).width,
       child: Card(
@@ -22,38 +31,49 @@ class TariffCalcCardComponent extends StatelessWidget {
                   children: [
                     Expanded(
                       child: DefaultTextField(
-                          textEditingController: TextEditingController(text: ""), labelText: '단위당 가격'),
+                          textEditingController: _unitPriceTextEditingController, labelText: '단위당 가격'),
                     ),
 
                     const SizedBox(width: 20,),
 
                     Expanded(
                       child: DefaultTextField(
-                          textEditingController: TextEditingController(text: ""), labelText: '단위당 갯수'),
+                          textEditingController: _unitAmountTextEditingController, labelText: '단위당 갯수'),
                     ),
                   ],
                 ),
                 const SizedBox(height: 20,),
 
-                const TitleContentText(
+                TitleContentText(
                   title: "신고가격",
-                  content: "-",
+                  content: state?.declaredPrice.toString() ?? "-",
                 ),
                 const SizedBox(height: 10,),
                 TitleContentText(
-                  title: "일반 과세",
-                  content: "-",
+                  title: "일반 관세",
+                  content:state?.generalTaxablePrice?.toString() ?? "-",
                 ),
                 const SizedBox(height: 10,),
                 TitleContentText(
-                  title: "단위당 과세",
-                  content: "-",
+                  title: "단위당 관세",
+                  content: state?.taxablePricePerUnit?.toString() ?? "-",
                 ),
                 const SizedBox(height: 10,),
                 TitleContentText(
-                  title: "총 과세",
-                  content: "-",
+                  title: "총 관세",
+                  content: state?.totalTaxablePrice.toString() ?? "-",
                 ),
+
+                const SizedBox(height: 40,),
+
+                PrimaryButton(onPressed: () {
+                  ref.read(tariffCalcStateProvider.notifier).unitPrice = double.tryParse(_unitPriceTextEditingController.text);
+                  ref.read(tariffCalcStateProvider.notifier).unitCount = double.tryParse(_unitAmountTextEditingController.text);
+                  ref.read(tariffCalcStateProvider.notifier).calculate();
+                }, text: "관세 계산하기"),
+
+                const SizedBox(height: 10,),
+
               ],
             ),
           )

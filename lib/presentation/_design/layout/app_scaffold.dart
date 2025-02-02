@@ -28,11 +28,11 @@ class AppScaffold extends StatelessWidget {
                 ),
               ),
               child: Scaffold(
-                  appBar: AppBar(
-                    title: Text(title),
-                  ),
-                  body: child)),
-          // child: const TariffLookupScreen()),
+                appBar: AppBar(
+                  title: Text(title),
+                ),
+                body: child,
+              )),
         ));
   }
 }

@@ -8,6 +8,7 @@ import 'package:tariff_calc/domain/hs_code/repository/hs_code_repository.dart';
 import 'package:tariff_calc/domain/hs_code/usecase/get_hs_code_info_usecase.dart';
 import 'package:tariff_calc/domain/hs_code/usecase/get_hs_code_list_usecase.dart';
 import 'package:tariff_calc/domain/tariff_info/repository/tariff_info_repository.dart';
+import 'package:tariff_calc/domain/tariff_info/usecase/calculate_tariff_usecase.dart';
 
 
 // client
@@ -38,4 +39,8 @@ final getHsCodeListUsecaseProvider = Provider((ref) {
 final getHsCodeInfoUsecaseProvider = Provider((ref) {
   final hsCodeListRepository = ref.watch(hsCodeRepositoryProvider);
   return GetHsCodeInfoUseCase(repository: hsCodeListRepository);
+});
+
+final calculateTariffUsecaseProvider = Provider((ref) {
+  return CalculateTariffUseCase();
 });

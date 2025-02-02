@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tariff_calc/domain/tariff_info/repository/tariff_info_repository.dart';
@@ -20,3 +21,10 @@ class TariffCodeSignsState extends StateNotifier<List<String>> {
   }
 }
 
+class SubTariffCodeSignsState {
+  final List<String> _codeSigns;
+  UnmodifiableListView<String> get codeSigns => UnmodifiableListView(_codeSigns);
+
+  SubTariffCodeSignsState({required List<String> codeSigns})
+    : _codeSigns = codeSigns;
+}
