@@ -10,6 +10,7 @@ import 'package:tariff_calc/presentation/tariff_lookup/_state/tariff_info_state/
 
 import '../../../config/di.dart';
 import '../../../domain/hs_code/entity/hs_code_entity.dart';
+import '../../../domain/tariff_info/entity/tariff_calc_entity.dart';
 
 
 // state
@@ -52,7 +53,11 @@ final tariffInfoStateProvider = AutoDisposeStateNotifierProvider<TariffInfoState
 
 final tariffCalcStateProvider = AutoDisposeStateNotifierProvider<TariffCalcState, TariffCalcEntity?>((ref) {
   final tariffInfoEntity = ref.watch(tariffInfoStateProvider);
-  return TariffCalcState(tariffInfoEntity: tariffInfoEntity.value);
+  final calculateTariffUseCase = ref.watch(calculateTariffUsecaseProvider);
+  return TariffCalcState(
+    tariffInfo: tariffInfoEntity.value,
+    calculateTariffUseCase: calculateTariffUseCase
+  );
 });
 
 // actor
