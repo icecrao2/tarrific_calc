@@ -7,7 +7,6 @@ import 'components/_list/search_hs_code_list_component.dart';
 import 'components/_search_button/search_hs_code_button_component.dart';
 
 class SearchHsScreen extends StatelessWidget {
-
   const SearchHsScreen({super.key});
 
   @override

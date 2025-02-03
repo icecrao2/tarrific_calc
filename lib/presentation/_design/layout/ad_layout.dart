@@ -20,22 +20,22 @@ class _AdLayoutState extends State<AdLayout> {
 
   @override
   void initState() {
-    BannerAd(
-      adUnitId: AdHelper.bannerAdUnitId,
-      request: const AdRequest(),
-      size: AdSize.banner,
-      listener: BannerAdListener(
-        onAdLoaded: (ad) {
-          setState(() {
-            _bannerAd = ad as BannerAd;
-          });
-        },
-        onAdFailedToLoad: (ad, err) {
-          print('Failed to load a banner ad: ${err.message}');
-          ad.dispose();
-        },
-      ),
-    ).load();
+    // BannerAd(
+    //   adUnitId: AdHelper.bannerAdUnitId,
+    //   request: const AdRequest(),
+    //   size: AdSize.banner,
+    //   listener: BannerAdListener(
+    //     onAdLoaded: (ad) {
+    //       setState(() {
+    //         _bannerAd = ad as BannerAd;
+    //       });
+    //     },
+    //     onAdFailedToLoad: (ad, err) {
+    //       print('Failed to load a banner ad: ${err.message}');
+    //       ad.dispose();
+    //     },
+    //   ),
+    // ).load();
   }
 
   @override
@@ -43,22 +43,22 @@ class _AdLayoutState extends State<AdLayout> {
     return Column(
       children: [
         Expanded(child: widget.child,),
-        if (_bannerAd != null)
-          Align(
-            alignment: Alignment.topCenter,
-            child: SizedBox(
-              width: _bannerAd!.size.width.toDouble(),
-              height: _bannerAd!.size.height.toDouble(),
-              child: AdWidget(ad: _bannerAd!),
-            ),
-          ),
+        // if (_bannerAd != null)
+        //   Align(
+        //     alignment: Alignment.topCenter,
+        //     child: SizedBox(
+        //       width: _bannerAd!.size.width.toDouble(),
+        //       height: _bannerAd!.size.height.toDouble(),
+        //       child: AdWidget(ad: _bannerAd!),
+        //     ),
+        //   ),
       ],
     );
   }
 
   @override
   void dispose() {
-    _bannerAd?.dispose();
-    super.dispose();
+    // _bannerAd?.dispose();
+    // super.dispose();
   }
 }
