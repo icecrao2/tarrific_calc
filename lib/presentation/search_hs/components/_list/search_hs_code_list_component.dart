@@ -23,16 +23,18 @@ class _SearchHsCodeListComponentState extends ConsumerState<SearchHsCodeListComp
   void initState() {
     super.initState();
 
-    final hsCodeListVm = ref.read(hsCodeListVmProvider.notifier);
-    final actionStream = ref.watch(actionStreamControllerProvider);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final hsCodeListVm = ref.read(hsCodeListVmProvider.notifier);
+      final actionStream = ref.watch(actionStreamControllerProvider);
 
-    _subscription = actionStream.stream.listen((state) {
-      switch(state) {
-        case SearchClicked(: final query):
-          hsCodeListVm.searchHsCode(query);
-        default:
-          break;
-      }
+      _subscription = actionStream.stream.listen((state) {
+        switch(state) {
+          case SearchClicked(: final query):
+            hsCodeListVm.searchHsCode(query);
+          default:
+            break;
+        }
+      });
     });
   }
 

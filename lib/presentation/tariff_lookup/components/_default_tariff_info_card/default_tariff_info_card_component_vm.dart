@@ -3,10 +3,10 @@ import 'package:tariff_calc/domain/hs_code/usecase/get_hs_code_info_usecase.dart
 
 import '../../../../domain/hs_code/entity/hs_code_entity.dart';
 
-class DefaultInfoState extends StateNotifier<AsyncValue<HsCodeEntity>> {
+class DefaultTariffInfoCardComponentVm extends StateNotifier<AsyncValue<HsCodeEntity>> {
   final GetHsCodeInfoUseCase _getHsCodeInfoUsecase;
 
-  DefaultInfoState({
+  DefaultTariffInfoCardComponentVm({
     required GetHsCodeInfoUseCase getHsCodeInfoUsecase
   })
       : _getHsCodeInfoUsecase = getHsCodeInfoUsecase,

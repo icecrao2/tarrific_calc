@@ -59,6 +59,6 @@ class _AdLayoutState extends State<AdLayout> {
   @override
   void dispose() {
     // _bannerAd?.dispose();
-    // super.dispose();
+    super.dispose();
   }
 }

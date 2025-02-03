@@ -3,61 +3,57 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tariff_calc/domain/tariff_info/entity/tariff_info_entity.dart';
 import 'package:tariff_calc/presentation/_design/radio/toggle_button_radio.dart';
-import 'package:tariff_calc/presentation/tariff_lookup/_state/default_info_state/default_info_state.dart';
-import 'package:tariff_calc/presentation/tariff_lookup/_state/tariff_calc_state/tariff_calc_state.dart';
-import 'package:tariff_calc/presentation/tariff_lookup/_state/tariff_code_signs_state/tariff_code_sign_state.dart';
-import 'package:tariff_calc/presentation/tariff_lookup/_state/tariff_info_state/tariff_info_state.dart';
+import 'package:tariff_calc/presentation/tariff_lookup/components/_default_tariff_info_card/default_tariff_info_card_component_vm.dart';
+import 'package:tariff_calc/presentation/tariff_lookup/components/_tariff_calc_card/tariff_calc_card_component_vm.dart';
+import 'package:tariff_calc/presentation/tariff_lookup/components/_tariff_code_sign_info_card/tariff_code_sign_info_card_component_vm.dart';
 
 import '../../../config/di.dart';
 import '../../../domain/hs_code/entity/hs_code_entity.dart';
 import '../../../domain/tariff_info/entity/tariff_calc_entity.dart';
+import '../components/_tariff_code_sign_radio/tariff_code_sign_radio_component_vm.dart';
 
 
-// state
-final defaultInfoStateProvider = AutoDisposeStateNotifierProvider<DefaultInfoState, AsyncValue<HsCodeEntity>>((ref) {
-  final getHsCodeInfoUsecase = ref.watch(getHsCodeInfoUsecaseProvider);
-  return DefaultInfoState(getHsCodeInfoUsecase: getHsCodeInfoUsecase);
+final actionStreamControllerProvider = AutoDisposeProvider((ref) {
+  final controller = StreamController();
+  ref.onDispose(() => controller.close());
+  return controller;
 });
 
-final tariffCodeSignsStateProvider = AutoDisposeStateNotifierProvider<TariffCodeSignsState, List<String>>((ref) {
+
+// vm
+final defaultTariffInfoCardComponentVmProvider = AutoDisposeStateNotifierProvider<DefaultTariffInfoCardComponentVm, AsyncValue<HsCodeEntity>>((ref) {
+  final getHsCodeInfoUsecase = ref.watch(getHsCodeInfoUsecaseProvider);
+  return DefaultTariffInfoCardComponentVm(getHsCodeInfoUsecase: getHsCodeInfoUsecase);
+});
+
+final tariffCodeSignRadioComponentVmProvider = AutoDisposeStateNotifierProvider<TariffCodeSignRadioComponentVm, ToggleButtonRadioController>((ref){
   final tariffInfoRepository = ref.watch(tariffInfoRepositoryProvider);
-  final defaultInfoState = ref.watch(defaultInfoStateProvider);
-  final hsCode = defaultInfoState.value?.hsCode ?? "";
-  return TariffCodeSignsState(
+  final actionStreamController = ref.watch(actionStreamControllerProvider);
+  final defaultInfoVm = ref.watch(defaultTariffInfoCardComponentVmProvider);
+  final vm = TariffCodeSignRadioComponentVm(
+    tariffInfoRepository: tariffInfoRepository,
+    streamController: actionStreamController
+  );
+  vm.load(hsCode: defaultInfoVm.value?.hsCode ?? "");
+  return vm;
+});
+
+final tariffCodeSignInfoCardComponentVmProvider = AutoDisposeStateNotifierProvider<TariffCodeSignInfoCardComponentVm, AsyncValue<TariffInfoEntity>>((ref) {
+  final tariffInfoRepository = ref.watch(tariffInfoRepositoryProvider);
+  final defaultTariffInfoCardComponentVm = ref.watch(defaultTariffInfoCardComponentVmProvider);
+  final hsCode = defaultTariffInfoCardComponentVm.value?.hsCode ?? "";
+
+  return TariffCodeSignInfoCardComponentVm(
     tariffInfoRepository: tariffInfoRepository,
     hsCode: hsCode
   );
 });
 
-final toggleButtonRadioControllerProvider = AutoDisposeProvider((ref) {
-  final codeSigns = ref.watch(tariffCodeSignsStateProvider);
-  final controller = StreamController();
-  ref.onDispose(() {
-    controller.close();
-  });
-  return ToggleButtonRadioController(controller: controller, options: codeSigns);
-});
-
-final tariffInfoStateProvider = AutoDisposeStateNotifierProvider<TariffInfoState, AsyncValue<TariffInfoEntity>>((ref) {
-  final defaultInfoState = ref.watch(defaultInfoStateProvider);
-  final toggleButtonStreamController = ref.watch(toggleButtonRadioControllerProvider);
-  final tariffInfoRepository = ref.watch(tariffInfoRepositoryProvider);
-  final hsCode = defaultInfoState.value?.hsCode ?? "";
-
-  return TariffInfoState(
-      tariffInfoRepository: tariffInfoRepository,
-      hsCode: hsCode,
-      stream: toggleButtonStreamController.controller.stream
-  );
-});
-
-final tariffCalcStateProvider = AutoDisposeStateNotifierProvider<TariffCalcState, TariffCalcEntity?>((ref) {
-  final tariffInfoEntity = ref.watch(tariffInfoStateProvider);
+final tariffCalcCardComponentVmProvider = AutoDisposeStateNotifierProvider<TariffCalcCardComponentVm, TariffCalcEntity?>((ref) {
+  final tariffInfoEntity = ref.watch(tariffCodeSignInfoCardComponentVmProvider);
   final calculateTariffUseCase = ref.watch(calculateTariffUsecaseProvider);
-  return TariffCalcState(
-    tariffInfo: tariffInfoEntity.value,
-    calculateTariffUseCase: calculateTariffUseCase
+  return TariffCalcCardComponentVm(
+      tariffInfo: tariffInfoEntity.value,
+      calculateTariffUseCase: calculateTariffUseCase
   );
 });
-
-// actor

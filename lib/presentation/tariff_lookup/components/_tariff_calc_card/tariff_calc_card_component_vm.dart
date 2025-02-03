@@ -4,7 +4,7 @@ import '../../../../domain/tariff_info/entity/tariff_calc_entity.dart';
 import '../../../../domain/tariff_info/entity/tariff_info_entity.dart';
 import '../../../../domain/tariff_info/usecase/calculate_tariff_usecase.dart';
 
-class TariffCalcState extends StateNotifier<TariffCalcEntity?> {
+class TariffCalcCardComponentVm extends StateNotifier<TariffCalcEntity?> {
 
   final TariffInfoEntity? tariffInfo;
   final CalculateTariffUseCase _calculateTariffUseCase;
@@ -15,13 +15,12 @@ class TariffCalcState extends StateNotifier<TariffCalcEntity?> {
   set unitCount(double? value) => _unitCount = value;
   set unitPrice(double? value) => _unitPrice = value;
 
-  TariffCalcState({
+  TariffCalcCardComponentVm({
     required CalculateTariffUseCase calculateTariffUseCase,
     required this.tariffInfo,
   })
       : _calculateTariffUseCase = calculateTariffUseCase,
         super(null);
-
 
   void calculate() {
     if (_unitCount == null || _unitPrice == null || tariffInfo == null) {
