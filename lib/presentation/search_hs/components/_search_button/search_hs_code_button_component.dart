@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tariff_calc/presentation/search_hs/components/_search_button/search_hs_code_button_component_design.dart';
 import 'package:tariff_calc/presentation/search_hs/config/di.dart';
 
-import '../../../_design/button/primary_button.dart';
-
 class SearchHsCodeButtonComponent extends ConsumerWidget {
-  const SearchHsCodeButtonComponent({super.key});
+
+  const SearchHsCodeButtonComponent({super.key,});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final actionStreamController = ref.watch(actionStreamControllerProvider);
+    final textEditingController = ref.watch(textEditingControllerProvider);
 
-    final actor = ref.read(searchHsCodeButtonComponentActorProvider);
-
-    return PrimaryButton(
-      text: "HS 코드 찾기",
-      onPressed: () {
-        actor.search();
-      },
+    return SearchHsCodeButtonComponentDesign(
+        actionStreamController: actionStreamController,
+        textEditingController: textEditingController
     );
   }
 }

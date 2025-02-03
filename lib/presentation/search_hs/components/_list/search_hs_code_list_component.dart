@@ -1,78 +1,53 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tariff_calc/presentation/_design/list/default_list.dart';
-import 'package:tariff_calc/presentation/tariff_lookup/tariff_lookup_screen.dart';
+import 'package:tariff_calc/presentation/search_hs/components/_list/search_hs_code_list_component_design.dart';
 
+import '../../action_event.dart';
 import '../../config/di.dart';
 
-class SearchHsCodeListComponent extends ConsumerWidget {
-
+class SearchHsCodeListComponent extends ConsumerStatefulWidget {
   const SearchHsCodeListComponent({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _SearchHsCodeListComponentState();
+}
 
-    final state = ref.watch(hsCodeListStateProvider);
 
-    return DefaultList(
-      elements: state.map((element) => DefaultListElementUiModel(
-        leading: SizedBox(
-          width: 160,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              const Text(
-                '품명',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              Text(
-                element.koreanName.isNotEmpty ? element.koreanName : element.englishName,
-                overflow: TextOverflow.ellipsis,
-                softWrap: false,
-                maxLines: 1,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
-        ),
-        center: Center(
-          child: Column(
-            children: [
-              const Text(
-                'HS Code',
-                maxLines: 1,
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              Text(
-                element.hsCode,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          )
-        ),
-        trailing: const SizedBox.shrink(),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => TariffLookupScreen(hsCode: element.hsCode),
-            ),
-          );
+class _SearchHsCodeListComponentState extends ConsumerState<SearchHsCodeListComponent> {
+
+  StreamSubscription? _subscription;
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final hsCodeListVm = ref.read(hsCodeListVmProvider.notifier);
+      final actionStream = ref.watch(actionStreamControllerProvider);
+
+      _subscription = actionStream.stream.listen((state) {
+        switch(state) {
+          case SearchClicked(: final query):
+            hsCodeListVm.searchHsCode(query);
+          default:
+            break;
         }
-      )).toList()
-    );
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = ref.watch(hsCodeListVmProvider);
+
+    return SearchHsCodeListComponentDesign(hsCodeList: state);
   }
 }

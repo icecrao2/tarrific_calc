@@ -6,7 +6,7 @@ import 'package:tariff_calc/presentation/search_hs/search_hs_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  MobileAds.instance.initialize();
+  // MobileAds.instance.initialize();
   await dotenv.load();
   runApp(const ProviderScope(child: MyApp()));
 }
