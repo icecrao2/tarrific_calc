@@ -24,21 +24,23 @@ class _SearchHsTextFieldComponentState extends ConsumerState<SearchHsTextFieldCo
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await Future.delayed(const Duration(seconds: 1));
-      final vm = ref.read(searchHsCodeTextFieldComponentVmProvider.notifier);
-      vm.load();
+      _load();
 
       final actionStream = ref.watch(actionStreamControllerProvider);
-
       _subscription = actionStream.stream.listen((state) {
         switch(state) {
           case OnLoadedList():
-            final vm = ref.read(searchHsCodeTextFieldComponentVmProvider.notifier);
-            vm.load();
+            _load();
           default:
             break;
         }
       });
     });
+  }
+
+  void _load() {
+    final vm = ref.read(searchHsCodeTextFieldComponentVmProvider.notifier);
+    vm.load();
   }
 
   @override
