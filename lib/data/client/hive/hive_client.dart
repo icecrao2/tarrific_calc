@@ -19,4 +19,8 @@ class HiveClient {
   Future<dynamic> read({required String key}) async {
     return await _box.get(key);
   }
+
+  List readAll() {
+    return _box.values.toList();
+  }
 }
