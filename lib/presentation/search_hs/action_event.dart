@@ -8,3 +8,7 @@ class SearchClicked extends ActionEvent {
 
   const SearchClicked(this.query);
 }
+
+class OnLoadedList extends ActionEvent {
+  const OnLoadedList();
+}

@@ -27,10 +27,11 @@ class _SearchHsCodeListComponentState extends ConsumerState<SearchHsCodeListComp
       final hsCodeListVm = ref.read(hsCodeListVmProvider.notifier);
       final actionStream = ref.watch(actionStreamControllerProvider);
 
-      _subscription = actionStream.stream.listen((state) {
+      _subscription = actionStream.stream.listen((state) async {
         switch(state) {
           case SearchClicked(: final query):
-            hsCodeListVm.searchHsCode(query);
+            await hsCodeListVm.searchHsCode(query);
+            actionStream.add(const OnLoadedList());
           default:
             break;
         }

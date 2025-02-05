@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../setting.dart';
+
 class AppScaffold extends StatelessWidget {
   final String title;
   final Widget child;
@@ -16,7 +18,7 @@ class AppScaffold extends StatelessWidget {
             FocusManager.instance.primaryFocus?.unfocus();
           },
           child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 33),
+              padding: const EdgeInsets.symmetric(horizontal: LAYOUT_HORIZON_PADDING),
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
