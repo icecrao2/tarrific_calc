@@ -12,7 +12,7 @@ import '../../../domain/hs_code/entity/hs_code_entity.dart';
 
 
 final actionStreamControllerProvider = AutoDisposeProvider((ref) {
-  final actionStreamController = StreamController<ActionEvent>();
+  final actionStreamController = StreamController<ActionEvent>.broadcast();
   ref.onDispose(() => actionStreamController.close());
   return actionStreamController;
 });

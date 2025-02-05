@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tariff_calc/presentation/search_hs/components/_text_field/search_hs_text_field_component_design.dart';
 import 'package:tariff_calc/presentation/search_hs/config/di.dart';
+
+import '../../action_event.dart';
 
 class SearchHsTextFieldComponent extends ConsumerStatefulWidget {
   const SearchHsTextFieldComponent({super.key});
@@ -12,6 +16,8 @@ class SearchHsTextFieldComponent extends ConsumerStatefulWidget {
 
 class _SearchHsTextFieldComponentState extends ConsumerState<SearchHsTextFieldComponent> {
 
+  StreamSubscription? _subscription;
+
   @override
   void initState() {
     super.initState();
@@ -20,7 +26,25 @@ class _SearchHsTextFieldComponentState extends ConsumerState<SearchHsTextFieldCo
       await Future.delayed(const Duration(seconds: 1));
       final vm = ref.read(searchHsCodeTextFieldComponentVmProvider.notifier);
       vm.load();
+
+      final actionStream = ref.watch(actionStreamControllerProvider);
+
+      _subscription = actionStream.stream.listen((state) {
+        switch(state) {
+          case OnLoadedList():
+            final vm = ref.read(searchHsCodeTextFieldComponentVmProvider.notifier);
+            vm.load();
+          default:
+            break;
+        }
+      });
     });
+  }
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
   }
 
   @override
