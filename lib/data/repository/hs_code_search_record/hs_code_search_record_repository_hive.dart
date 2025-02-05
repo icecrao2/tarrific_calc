@@ -14,7 +14,11 @@ class HsCodeSearchRecordRepositoryHive implements HsCodeSearchRecordRepository{
 
   @override
   Future<List<HsCodeSearchRecordEntity>> getAllRecords() async {
-    final dataModelGroup = _hiveClient.readAll() as List<HsCodeSearchRecordDataModel>;
+    final dataModelGroup = _hiveClient.readAll()
+      .map((data) {
+        return data as HsCodeSearchRecordDataModel;
+      })
+      .toList();
     return dataModelGroup.map((model) => HsCodeSearchRecordEntity(
         searchText: model.searchText,
         lastSearchDate: model.lastSearchDate,
@@ -24,9 +28,9 @@ class HsCodeSearchRecordRepositoryHive implements HsCodeSearchRecordRepository{
 
   @override
   Future<void> addRecord(HsCodeSearchRecordEntity record) async {
-    final origin = _hiveClient.read(key: record.searchText) as HsCodeSearchRecordDataModel;
+    final origin = (await _hiveClient.read(key: record.searchText)) as HsCodeSearchRecordDataModel?;
     final searchText = record.searchText;
-    final searchCount = origin.searchCount + 1;
+    final searchCount = origin == null ? 1 : origin.searchCount + 1;
     final lastSearchDate = record.lastSearchDate;
     final value = HsCodeSearchRecordDataModel(searchText, lastSearchDate, searchCount);
     await _hiveClient.put(key: searchText, value: value);

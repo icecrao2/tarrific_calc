@@ -47,7 +47,6 @@ class GetHsCodeListUsecase {
         lastSearchDate: DateTime.now(),
         searchCount: null
     );
-
     await _hsCodeSearchRecordRepository.addRecord(record);
   }
 }

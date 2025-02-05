@@ -1,0 +1,3 @@
+
+
+const double LAYOUT_HORIZON_PADDING = 33;

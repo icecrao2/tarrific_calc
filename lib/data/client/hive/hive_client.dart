@@ -4,12 +4,11 @@
 import 'package:hive/hive.dart';
 
 class HiveClient {
-  late String _boxName;
   late Box _box;
 
   Future<void> setBoxName(String boxName) async {
-    await Hive.openBox(_boxName);
-    _box = Hive.box(_boxName);
+    await Hive.openBox(boxName);
+    _box = Hive.box(boxName);
   }
 
   Future<void> put({required String key, required dynamic value}) async {
